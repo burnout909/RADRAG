@@ -15,7 +15,7 @@ dependencies:
       - appdirs==1.4.4
       - bitsandbytes==0.42.0
       - datasets==2.17.0
-      - faiss-gpu==1.7.4
+      - faiss-cpu==1.7.4
       - ipython==8.20.0
       - langchain-community==0.0.13
       - langchain-core==0.1.12
