@@ -1,6 +1,6 @@
 # app.py 또는 app.ipynb
 import gradio as gr
-import main, about, features, team, result
+import home, about, features, team, result
 
 css = """
 html, body {
@@ -62,7 +62,7 @@ html, body {
 
 
 with gr.Blocks(css=css) as demo:
-    main.app.render()
+    home.app.render()
 
 with demo.route("Result", path="/result"):
     result.app.render()
