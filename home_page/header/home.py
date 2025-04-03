@@ -1,4 +1,7 @@
 import gradio as gr
+import os
+
+image_path = os.path.abspath("img/Group.png")
 
 with gr.Blocks() as app:
 
@@ -21,7 +24,7 @@ with gr.Blocks() as app:
 
             with gr.Column(scale=1):
                 gr.Image(
-                    value="img/Group.png",
+                    value=image_path,
                     show_label=False,
                     show_share_button=False,
                     show_download_button=False,

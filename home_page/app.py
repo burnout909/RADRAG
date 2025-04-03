@@ -1,6 +1,7 @@
 # app.py 또는 app.ipynb
 import gradio as gr
-import home, about, features, team, result
+from header import home, about, features, team, result
+
 
 css = """
 html, body {
