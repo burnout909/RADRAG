@@ -8,7 +8,6 @@ with gr.Blocks() as app:
     with gr.Column(elem_classes=["container"]):
         
 
-        # Hero Section
         with gr.Row(elem_classes=["hero-section"]):
             with gr.Column(elem_classes=["text-box"], scale=1):
                 gr.HTML("<div class='title'>RADRAG</div>")

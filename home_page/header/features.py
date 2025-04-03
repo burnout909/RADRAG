@@ -13,8 +13,6 @@ with gr.Blocks(css="""
 
     with gr.Column(elem_classes=["container"]):
         
-
-        # body
         with gr.Row(elem_classes=["body"]):
             with gr.Column(elem_classes=["text-box"], scale=1):
                 gr.HTML("<div class='title'>RADRAG2</div>")
