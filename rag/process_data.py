@@ -24,10 +24,10 @@ def load_snomed_ct(data_path: Path):
         return df[df.active == "1"]
 
     active_terms = _read_file_and_subset_to_active(
-        data_path / "sct2_Concept_Snapshot_INT_20230531.txt"
+        data_path / "sct2_Concept_Snapshot_INT_20250401.txt"
     )
     active_descs = _read_file_and_subset_to_active(
-        data_path / "sct2_Description_Snapshot-en_INT_20230531.txt"
+        data_path / "sct2_Description_Snapshot-en_INT_20250401.txt"
     )
 
     df = pd.merge(active_terms, active_descs, left_on=["id"], right_on=["conceptId"], how="inner")[
@@ -52,13 +52,12 @@ def make_flattened_terminology(
     snomed_ct_directory: Path = (
         root_directory
         / "data"
-        / "SnomedCT_InternationalRF2_PRODUCTION_20230531T120000Z_Challenge_Edition"
+        / "SnomedCT_InternationalRF2_PRODUCTION_20250401T120000Z"
     ),
     output_path: Path = root_directory / "assets" / "dataflattened_terminology.csv",
 ):
     # unzip the terminology provided on the data download page and specify the path to the folder here
     snomed_rf2_path = Path(snomed_ct_directory)
-
     # load the SNOMED release
     df = load_snomed_ct(snomed_rf2_path / "Snapshot" / "Terminology")
     logger.debug(f"Loaded SNOMED CT release containing {len(df):,} rows (expected 364,323).")
@@ -93,10 +92,10 @@ def make_flattened_terminology(
 def generate_sct_dictionary(
     snapshot_path: Path = root_directory
     / "data"
-    / "SnomedCT_InternationalRF2_PRODUCTION_20230531T120000Z_Challenge_Edition"
+    / "SnomedCT_InternationalRF2_PRODUCTION_20250401T120000Z"
     / "Snapshot"
     / "Terminology"
-    / "sct2_Description_Snapshot-en_INT_20230531.txt",
+    / "sct2_Description_Snapshot-en_INT_20250401.txt",
     flattened_terminology_path: Path = root_directory / "assets" / "dataflattened_terminology.csv",
     output_path: Path = root_directory / "assets" / "newdict_snomed.txt",
 ):
