@@ -1,11 +1,13 @@
 import gradio as gr
+import os
+
+image_path = os.path.abspath("img/Group.png")
 
 with gr.Blocks() as app:
 
     with gr.Column(elem_classes=["container"]):
         
 
-        # Hero Section
         with gr.Row(elem_classes=["hero-section"]):
             with gr.Column(elem_classes=["text-box"], scale=1):
                 gr.HTML("<div class='title'>RADRAG</div>")
@@ -21,7 +23,7 @@ with gr.Blocks() as app:
 
             with gr.Column(scale=1):
                 gr.Image(
-                    value="img/Group.png",
+                    value=image_path,
                     show_label=False,
                     show_share_button=False,
                     show_download_button=False,
