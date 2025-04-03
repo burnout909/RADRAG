@@ -48,8 +48,7 @@ def build_result_page():
                     )
                 
                 with gr.Column(elem_classes=["card"]):
-                    gr.Markdown("### Patient Information (Menus)")
-                    btn_info = gr.Button("Basic Info")
+                    btn_info = gr.Button("Patient Information")
                     btn_history = gr.Button("Medical History")
                     btn_meds = gr.Button("Medications")
                     btn_visits = gr.Button("All Visits")
@@ -62,8 +61,12 @@ def build_result_page():
             with gr.Column(scale=1, min_width=250):
                 with gr.Column(elem_classes=["card"]):
                     gr.Markdown("### Clinical Notes")
-                    gr.Textbox(placeholder="진단 메모 등을 작성",
-                               lines= 10)
+                    clinical_notes = gr.Textbox(
+                        placeholder="진단 메모 등을 작성",
+                        lines=10
+                    )
+                    standardize_btn = gr.Button("Standardization")
+
 
         with gr.Row():
             with gr.Column(scale=1, min_width=250):
