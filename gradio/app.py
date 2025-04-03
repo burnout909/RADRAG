@@ -1,5 +1,5 @@
 import gradio as gr
-from header import home, about, features, team, result
+from pages import home, playground
 
 
 css = """
@@ -71,16 +71,7 @@ html, body {
 with gr.Blocks(css=css) as demo:
     home.app.render()
 
-with demo.route("Result", path="/result"):
-    result.build_result_page()
-
-with demo.route("About", path="/about"):
-    about.app.render()
-
-with demo.route("Features", path="/features"):
-    features.app.render()
-
-with demo.route("Team", path="/team"):
-    team.app.render()
+with demo.route("Playground", path="/playground"):
+    playground.build_result_page()
 
 demo.launch(share=True, show_api=False, show_error=True, inbrowser=True)

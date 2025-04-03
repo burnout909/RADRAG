@@ -19,7 +19,7 @@ with gr.Blocks() as app:
                         free-text.
                     </div>
                 """)
-                gr.HTML("<a href='/result'><button class='cta-btn'>GET STARTED</button></a>")
+                gr.HTML("<a href='/playground'><button class='cta-btn'>GET STARTED</button></a>")
 
             with gr.Column(scale=1):
                 gr.Image(

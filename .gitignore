@@ -1,5 +1,10 @@
 .env
 .DS_Store
+.vscode
 
 /rag/assets
 /rag/data
+/rag/user_input.pdf
+
+/gradio/.gradio
+/gradio/user_input.pdf
