@@ -71,7 +71,8 @@ html, body {
 with gr.Blocks(css=css) as demo:
     home.app.render()
 
-with demo.route("Result", path="/result"): result.build_result_page()
+with demo.route("Result", path="/result"):
+    result.build_result_page()
 
 with demo.route("About", path="/about"):
     about.app.render()
