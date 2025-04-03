@@ -1,141 +1,192 @@
+from dropdown import render_dropdown_box
 import gradio as gr
-import pandas as pd
+import base64
 
-patients = {
-    "12334": {"name": "John Doe", "gender": "Male", "nationality": "USA", "insurance": "Aetna"},
-    "56789": {"name": "Jane Smith", "gender": "Female", "nationality": "Canada", "insurance": "BlueCross"},
-    "89123": {"name": "Minsoo Kim", "gender": "Male", "nationality": "Korea", "insurance": "NHIS"}
-}
-
-def display_info(patient_id):
-    info = patients[patient_id]
-    return (
-        f"**Name**: {info['name']}\n\n"
-        f"**Gender**: {info['gender']}\n\n"
-        f"**Nationality**: {info['nationality']}\n\n"
-        f"**Insurance**: {info['insurance']}"
-    )
-
-def display_menu(patient_id, menu_name):
-    info = patients[patient_id]
-    return (
-        f"## {menu_name}\n\n"
-        f"**Patient**: {info['name']} (ID: {patient_id})\n\n"
-        f"*(이 영역에 '{menu_name}' 관련 상세 정보를 표시할 수 있습니다.)*"
-    )
+def encode_image_to_base64(path):
+    with open(path, "rb") as image_file:
+        encoded = base64.b64encode(image_file.read()).decode('utf-8')
+        return f"data:image/png;base64,{encoded}"
 
 def build_result_page():
-    with gr.Blocks(css="""
-.card {
-    border: 1px solid #eee;
-    border-radius: 10px;
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    min-height: 150px;
-    margin-bottom: 15px;
-}
-    """) as app:
+    with gr.Blocks() as result_app:
 
+        # 상단 Row: Patient dropdown + list | Patient Info | Clinical Notes
         with gr.Row():
-            with gr.Column(scale=1, min_width=250):
-                with gr.Column(elem_classes=["card"]):
-                    gr.Markdown("### Patient")
-                    patient_selector = gr.Dropdown(
-                        choices=list(patients.keys()), 
-                        value="12334",
-                        label="Select Patient ID"
-                    )
-                
-                with gr.Column(elem_classes=["card"]):
-                    btn_info = gr.Button("Patient Information")
-                    btn_history = gr.Button("Medical History")
-                    btn_meds = gr.Button("Medications")
-                    btn_visits = gr.Button("All Visits")
+            # 왼쪽 컬럼: Patient 드롭다운 + 버튼 4개
+            with gr.Column(scale=1):
+                render_dropdown_box("Patient")
 
-            with gr.Column(scale=1, min_width=300):
-                with gr.Column(elem_classes=["card"]):
-                    gr.Markdown("### Information")
-                    info_display = gr.Markdown() 
+                gr.HTML("""
+                    <div class="info-box">
+                        <style>
+                            .info-box {
+                                background-color: white;
+                                border-radius: 12px;
+                                box-shadow: 0px 3px 8px rgba(0,0,0,0.05);
+                                font-family: Arial, sans-serif;
+                                overflow: hidden;
+                                width: 280px;
+                                margin-top: 10px;
+                            }
+                            .info-box .title {
+                                font-weight: bold;
+                                padding: 12px 16px;
+                                font-size: 15px;
+                                border-bottom: 1px solid #ddd;
+                                background-color: #f8f8f8;
+                            }
+                            .info-box .item {
+                                padding: 12px 16px;
+                                font-size: 14px;
+                                border-bottom: 1px solid #ddd;
+                                cursor: pointer;
+                                background-color: white;
+                            }
+                            .info-box .item:hover {
+                                background-color: #f0f0f0;
+                            }
+                            .info-box .item:last-child {
+                                border-bottom: none;
+                            }
+                        </style>
+                        <div class="item">Patient Information</div>
+                        <div class="item">Medical History</div>
+                        <div class="item">Medications</div>
+                        <div class="item">All Visits</div>
+                    </div>
+                """)
 
-            with gr.Column(scale=1, min_width=250):
-                with gr.Column(elem_classes=["card"]):
-                    gr.Markdown("### Clinical Notes")
-                    clinical_notes = gr.Textbox(
-                        placeholder="진단 메모 등을 작성",
-                        lines=10
-                    )
-                    standardize_btn = gr.Button("Standardization")
+            # 가운데 컬럼: Patient Information
+            with gr.Column(scale=1):
+                gr.HTML("""
+                    <style>
+                        .card {
+                            background-color: #ffffff;
+                            border-radius: 16px;
+                            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+                            padding: 24px;
+                            width: 368px;
+                            height: 304px;
+                            font-family: 'Arial', sans-serif;
+                            color: #333333;
+                            margin: 10px;
+                            box-sizing: border-box;
+                        }
+                        .card h3 {
+                            margin: 0 0 12px 0;
+                            font-size: 17px;
+                            font-weight: 600;
+                        }
+                    </style>
+                    <div class='card'>
+                        <h3>Patient Information</h3>
+                        <p><strong>Name:</strong> Lola Greenwood</p>
+                        <p><strong>Patient ID:</strong> 12334</p>
+                        <p><strong>Gender:</strong> female</p>
+                        <p><strong>Nationality:</strong> USA</p>
+                        <p><strong>Pay Type:</strong> IP</p>
+                        <p><strong>Insurance ID:</strong> 2123767</p>
+                        <p><strong>Sub Insurance ID:</strong> 222388</p>
+                    </div>
+                """)
 
+            # 오른쪽 컬럼: Clinical Notes
+            with gr.Column(scale=1):
+                gr.HTML("""
+                    <style>
+                        .card {
+                            background-color: #ffffff;
+                            border-radius: 16px;
+                            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+                            padding: 24px;
+                            width: 368px;
+                            height: 304px;
+                            font-family: 'Arial', sans-serif;
+                            color: #333333;
+                            margin: 10px;
+                            box-sizing: border-box;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-between;
+                        }
+                        .card h3 {
+                            margin: 0 0 12px 0;
+                            font-size: 17px;
+                            font-weight: 600;
+                        }
+                        .spinner {
+                            border: 4px solid #f3f3f3;
+                            border-top: 4px solid #007AFF;
+                            border-radius: 50%;
+                            width: 24px;
+                            height: 24px;
+                            animation: spin 1s linear infinite;
+                            margin: 10px auto;
+                            display: none;
+                        }
+                        @keyframes spin {
+                            0% { transform: rotate(0deg); }
+                            100% { transform: rotate(360deg); }
+                        }
+                    </style>
+                    <div class='card'>
+                        <h3>Clinical Notes</h3>
+                        <textarea id="clinical-text" rows="4" style="width:100%; padding:8px; font-size:14px; border-radius:8px; border:1px solid #ccc;"></textarea>
+                        <div id="loader" style="display:none; border: 4px solid #f3f3f3; border-top: 4px solid #007AFF; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin: 10px auto;"></div>
+                        <button style="background-color:#007AFF; color:white; padding:10px 24px; border-radius:16px; border:none; font-weight:bold; font-size:15px; cursor:pointer;" onclick="document.getElementById('loader').style.display='block'; setTimeout(() => { document.getElementById('loader').style.display='none'; alert('완료'); }, 1000);">Standardization</button>
+                    </div>
+                """)
 
+        # 하단 Row: Procedures | X-ray | DICOM Metadata
         with gr.Row():
-            with gr.Column(scale=1, min_width=250):
-                with gr.Column(elem_classes=["card"]):
-                    gr.Markdown("### Procedures")
-                    gr.Dropdown(
-                        choices=["0001.dcm", "0002.dcm", "0003.dcm"],
-                        value="0001.dcm",
-                        label="Select Procedure"
-                    )
+            # 왼쪽
+            render_dropdown_box("Procedures", ["0001.dcm", "0002.dcm", "0003.dcm"])
 
-        
-            with gr.Column(scale=1, min_width=300):
-                with gr.Column(elem_classes=["card"]):
-                    gr.Markdown("### X-Ray Image")
-                    gr.Image(
-                        label="Preview", 
-                        value=None, 
-                        type="filepath"
-                    )
-        
-            with gr.Column(scale=1, min_width=300):
-                with gr.Column(elem_classes=["card"]):
-                    gr.Markdown("### DICOM Metadata")
-                    meta_df = pd.DataFrame([
-                        {"Tag": "(0008,0060)", "Attribute": "Modality", "Value": "DX"},
-                        {"Tag": "(0020,000D)", "Attribute": "Study Instance UID", "Value": "1.2.840.113..."},
-                        {"Tag": "(0008,0018)", "Attribute": "SOP Instance UID", "Value": "1.2.840.113..."},
-                        {"Tag": "(0008,0022)", "Attribute": "Acquisition Date", "Value": "20230401"},
-                        {"Tag": "(0018,0060)", "Attribute": "kVp", "Value": "120"},
-                        {"Tag": "(0018,5101)", "Attribute": "View Position", "Value": "AP"}
-                    ])
-                    dicom_table = gr.DataFrame(
-                        value=meta_df,
-                        headers=["Tag", "Attribute", "Value"],
-                        datatype=["str", "str", "str"],
-                        interactive=False,
-                        label="DICOM Metadata Table"
-                    )
-                    gr.Markdown("<a href='#'>Find Tag</a>")
+            # 가운데 X-ray
+            xray_image = encode_image_to_base64("img/image.png")
+            gr.HTML(f"""
+                <style>
+                    .card {{
+                        background-color: #ffffff;
+                        border-radius: 16px;
+                        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+                        padding: 24px;
+                        width: 368px;
+                        height: 304px;
+                        font-family: 'Arial', sans-serif;
+                        color: #333333;
+                        margin: 10px;
+                        box-sizing: border-box;
+                    }}
+                    .card h3 {{
+                        margin: 0 0 12px 0;
+                        font-size: 17px;
+                        font-weight: 600;
+                    }}
+                </style>
+                <div class='card'>
+                    <img src="{xray_image}" style="width: 100%; height: auto; max-height: 265px; object-fit: contain; border-radius: 8px;" />
+                </div>
+            """)
 
-        info_display.value = display_info("12334")
+            # 오른쪽 DICOM
+            gr.HTML("""
+                <div style='background-color: #ffffff; border-radius: 16px; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08); padding: 20px; width: 368px; height: 304px; font-family: Arial, sans-serif; color: #333333; margin: 10px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;'>
+                    <div>
+                        <h3 style='margin: 0 0 12px 0; font-size: 17px; font-weight: 600;'>DICOM Metadata</h3>
+                        <table style='width:100%; font-size: 12.5px; border-collapse: collapse; line-height: 1.3;'>
+                            <tr><td>Modality</td><td>DX</td></tr>
+                            <tr><td>Study Instance UID</td><td>1.2.840.113...</td></tr>
+                            <tr><td>SOP Instance UID</td><td>1.2.840.113...</td></tr>
+                            <tr><td>Acquisition Date</td><td>2023-04-01</td></tr>
+                            <tr><td>kVp</td><td>120</td></tr>
+                            <tr><td>View Position</td><td>AP</td></tr>
+                        </table>
+                    </div>
+                    <div style='margin-top: 8px; color: #007AFF; font-weight: bold; font-size: 13.5px; text-decoration: underline; cursor: pointer; align-self: center;' onclick="alert('Viewing all tags...')">
+                        Find Tag
+                    </div>
+                </div>
+            """)
 
-        patient_selector.change(
-            fn=display_info,
-            inputs=patient_selector,
-            outputs=info_display
-        )
-
-        btn_info.click(
-            fn=display_info,
-            inputs=patient_selector,
-            outputs=info_display
-        )
-
-        btn_history.click(
-            fn=lambda pid: display_menu(pid, "Medical History"),
-            inputs=patient_selector,
-            outputs=info_display
-        )
-        btn_meds.click(
-            fn=lambda pid: display_menu(pid, "Medications"),
-            inputs=patient_selector,
-            outputs=info_display
-        )
-        btn_visits.click(
-            fn=lambda pid: display_menu(pid, "All Visits"),
-            inputs=patient_selector,
-            outputs=info_display
-        )
-
-    return app
+    return result_app
