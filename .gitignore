@@ -1,5 +1,5 @@
 .env
 .DS_Store
 
-./rag/assets
-./rag/data
+/rag/assets
+/rag/data
