@@ -2,6 +2,7 @@
 
 **RADRAG: Retrieval-Augmented Generation-based Standardization of Radiology Reports**  
 This project was developed for the **2025 AGI Hackathon**, hosted by **YBIGTADS** and **Upstage**.
+![Header 71](https://github.com/user-attachments/assets/10e9d231-a25c-4976-88f5-34679b3f2c7b)
 
 ## Project Overview
 
@@ -38,7 +39,7 @@ Concepts are grouped by concept_type_subset, and separate FAISS indices are buil
 Relevant code: [rag/generate_snomedct_faiss.py](https://github.com/burnout909/RADRAG/blob/main/rag/generate_snomedct_faiss.py
 )
 
-## Free-text Extraction & Matching
+## Free-text Extraction & Mapping
 We use the **Upstage Information Extraction API**, which supports key-based entity extraction.
 Keys are aligned with the concept_type_subset definitions used for SNOMED CT.
 
@@ -51,7 +52,5 @@ We implemented a web-based prototype using Gradio for interactive testing and vi
 Code directory: gradio/
 
 Live demo (temporary): https://320d3ce3b3fd23f293.gradio.live
-![Header 71](https://github.com/user-attachments/assets/10e9d231-a25c-4976-88f5-34679b3f2c7b)
-
 
 ⚠️ Deployment to Hugging Face Spaces is pending due to licensing restrictions.
