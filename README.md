@@ -51,6 +51,6 @@ Relevant code: [rag/extraction.py](https://github.com/burnout909/RADRAG/blob/mai
 We implemented a web-based prototype using Gradio for interactive testing and visualization.
 Code directory: gradio/
 
-Live demo (temporary): https://320d3ce3b3fd23f293.gradio.live
+Live demo (temporary): https://35775b6a59bbd99249.gradio.live/
 
 ⚠️ Deployment to Hugging Face Spaces is pending due to licensing restrictions.
