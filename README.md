@@ -50,7 +50,7 @@ Relevant code: [rag/extraction.py](https://github.com/burnout909/RADRAG/blob/mai
 We implemented a web-based prototype using Gradio for interactive testing and visualization.
 Code directory: gradio/
 
-Live demo (temporary): https://320d3ce3b3fd23f293.gradio.live/playground
+Live demo (temporary): https://320d3ce3b3fd23f293.gradio.live
 ![Header 71](https://github.com/user-attachments/assets/10e9d231-a25c-4976-88f5-34679b3f2c7b)
 
 
