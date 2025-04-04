@@ -47,7 +47,7 @@ The extracted results are mapped to the nearest concepts in the corresponding FA
 
 Relevant code: [rag/extraction.py](https://github.com/burnout909/RADRAG/blob/main/rag/extraction.py)
 
-## 🎛 Gradio-based Prototype
+## Gradio-based Prototype
 We implemented a web-based prototype using Gradio for interactive testing and visualization.
 Code directory: gradio/
 
